@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>乱逛的形状</title>
+        <style>
+                body{
+                        font-size: 0.8vw;
+                        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                }
+        </style>
+</head>
+<body >
+        <header style="margin: 20px;">
+                <strong>形状:</strong> <input name='shape' type='radio' value='ball' onclick="getAnswer()"> 圆儿
+                        <input name='shape' type='radio' value='circle' onclick="getAnswer()"> 圈儿
+                        <input name='shape' type='radio' value='square' onclick="getAnswer()" checked> 方块儿
+                        <input name='shape' type='radio' value='tri' onclick="getAnswer()" > 三角儿  
+
+                        <p style="margin-left: 20px; display: inline;"><strong>速率：</strong></p>
+                        <input type="button" id="sumbit" onclick="changeSpeed('+')" value='+'>
+                        <input style="margin-right: 20px; " type="button" id="sumbit" onclick="changeSpeed('-')" value='-'>
+        
+                <strong>形状大小：</strong>
+                        <input style="width:40" id='min' type='number' value='5'> - <input style="width:40" id='max' value='10' type='number'>
+                        <input  type="button" onclick="getAnswer()" value='确定'>
+                        <input  type="button" onclick="getAnswer()" value='清除'> <br><br>
+
+                        <p style="display: inline;"><strong>颜色：</strong></p>
+                        <input type="text" id='color' placeholder="比如 #000000 or gray"> 
+                        <input  type="button" id="sumbit" onclick="updateColor()" value='添加'>
+                        <section style='display:inline-block' id='panel'> <div></div> </section>
+        </header>
+       <canvas id='mycanvas'>hello</canvas> 
+       <audio src='Near Light - This Place Is My Home.mp3' controls='controls' autoplay=autoplay loop> </audio>
+       <script src='canvas.js'></script>
+</body>
+</html>
