@@ -1,0 +1,163 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            background-color: darkslategrey;
+        }
+        h1{
+             text-transform: uppercase;
+             letter-spacing: 4px;
+             text-align: center;
+             margin-top: 25px;
+             color: thistle;
+             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+        }
+        .show{
+            width: 400px;
+            height: unset;
+            margin: 100px 300px;
+            position: relative;
+            background: #000;
+        }
+        .show img{
+            width: 100%;
+        }
+        .mask{
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(183, 228, 120, 0.509);
+        }
+        .big{
+            position: absolute;
+            top:0;
+            left: 450px;
+            width: 600px;
+            height: 600px;
+            overflow: hidden;
+            
+        }
+        .big img{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: unset;
+        }
+        ul{
+            position: absolute;
+            top:130px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            list-style: none;
+        }
+        li img{
+            width: 100px;
+            margin: 5px;
+            opacity: 0.5;
+            transition: ease;
+        }
+        li img:hover{
+            opacity: 1;
+            transform: scale(1.5,1.5);
+            transition: ease;
+        }
+    </style>
+</head>
+<body>  
+    <h1>Detail Art</h1>
+    <section class='show'>
+        <div class='mask'></div>
+        <img src='images/IMG_0164.JPG'>
+
+        <div class='big'>
+            <img src="images/IMG_0164.JPG" alt="">
+        </div>
+    </section>
+    <ul>
+        <li><img src='images/IMG_0156.JPG'></li>
+        <li><img src='images/IMG_0251.PNG'></li>
+        <li><img src='images/IMG_0255.JPG'></li>
+        <li><img src='images/IMG_0256.JPG'></li>
+        <li><img src='images/IMG_0163.JPG'></li>
+        <li><img src='images/IMG_0164.JPG'></li>
+        <li><img src='images/IMG_0165.JPG'></li>
+    </ul>
+
+    <script>
+        window.onload = function(){
+
+            var mask = document.querySelector('.mask');
+            var big = document.querySelector('.big');
+            var preview = document.querySelector('.show');
+            var bigImg = big.children[0];
+            var imgLi = document.querySelector('ul');
+
+            // 更换图片
+            for(var i = 0; i<imgLi.children.length; i++){
+                imgLi.children[i].firstElementChild.addEventListener('click',function(){
+                    console.log(this);
+                    Imgsrc = this.src;
+                    big.firstElementChild.src = Imgsrc;
+                    preview.children[1].src = Imgsrc;
+                    
+                })
+            }
+
+            // 功能1.出现和消失
+            preview.addEventListener('mouseover', function(e){
+                mask.style.display='block';
+                big.style.display='block';
+
+            });
+            preview.addEventListener('mouseout',function(e){
+                mask.style.display='none';
+                big.style.display='none';
+            });
+
+            // 功能2.跟随鼠标移动
+            preview.addEventListener('mousemove',function(e){
+                // 获取鼠标在盒子内的坐标
+                x = e.pageX - preview.offsetLeft;
+                y = e.pageY - preview.offsetTop;
+                
+                var maskX = x - (mask.offsetWidth/2);
+                var maskY = y - (mask.offsetHeight/2);
+                 
+                // 遮挡层不能超过盒子边缘 判断mask的xy坐标是否超出了一定的数值
+                if (maskX < 0 ){
+                    maskX= 0;
+                } else if(maskX > preview.offsetWidth - mask.offsetWidth){
+                    maskX = preview.offsetWidth - mask.offsetWidth
+                } 
+                if(maskY < 0){
+                    maskY = 0;
+                } else if( maskY > preview.offsetHeight - mask.offsetHeight){
+                    maskY = preview.offsetHeight - mask.offsetHeight
+                }
+                
+                mask.style.left = maskX;
+                mask.style.top = maskY;
+                
+                // 大图跟着一起移动 按照比例来移动 mask移动距离/mask最大移动距离 = 大图移动距离/大图最大移动距离
+                var maskMax = preview.offsetWidth - mask.offsetWidth;
+                var bigMax = bigImg.offsetWidth - big.offsetWidth; // 大图的最大移动距离= 大图的宽 - 其父级框的宽度
+                var bigX = maskX * bigMax / maskMax;
+                var bigY = maskY * bigMax / maskMax;
+
+                bigImg.style.left = - bigX;
+                bigImg.style.top = - bigY;
+            });
+
+           
+
+        }
+    </script>
+</body>
+</html>
